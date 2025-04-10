@@ -5,11 +5,13 @@
 #include <SDL2/SDL_render.h>
 #include <SDL2/SDL_image.h>
 
-Sprite::Sprite() : texture(nullptr), width(0), height(0) {
+Sprite::Sprite() : texture(nullptr), width(0), height(0), frameCountW(1), frameCountH(1) {
     clipRect = {0, 0, 0, 0};
 }
 
-Sprite::Sprite(std::string file) : Sprite() {
+Sprite::Sprite(std::string file, int frameCountW, int frameCountH) : Sprite() {
+    this->frameCountW = frameCountW;
+    this->frameCountH = frameCountH;
     Open(file);
 }
 
@@ -37,7 +39,7 @@ void Sprite::Open(std::string file) {
         exit(1);
     }
     
-    SetClip(0, 0, width, height);
+    SetClip(0, 0, width/frameCountW, height/frameCountH);
 }
 
 void Sprite::SetClip(int x, int y, int w, int h) {
@@ -51,13 +53,28 @@ void Sprite::Render(int x, int y) {
 }
 
 int Sprite::GetWidth() {
-    return width;
+    return width/frameCountW;
 }
 
 int Sprite::GetHeight() {
-    return height;
+    return height/frameCountH;
 }
 
 bool Sprite::IsOpen() {
     return texture != nullptr;
+}
+
+void Sprite::SetFrame(int frame) {
+    int frameWidth = width/frameCountW;
+    int frameHeight = height/frameCountH;
+    
+    int frameX = (frame % frameCountW) * frameWidth;
+    int frameY = (frame / frameCountW) * frameHeight;
+    
+    SetClip(frameX, frameY, frameWidth, frameHeight);
+}
+
+void Sprite::SetFrameCount(int frameCountW, int frameCountH) {
+    this->frameCountW = frameCountW;
+    this->frameCountH = frameCountH;
 }

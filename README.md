@@ -36,16 +36,10 @@ Siga os passos abaixo para rodar o jogo:
 2. **Compile o projeto**:
      Execute o comando `make` no diretório raiz do projeto:
      ```bash
-     make
+     make run
      ```
 
-3. **Execute o jogo**:
-     Após a compilação, o executável será gerado. Para rodar o jogo, use:
-     ```bash
-     ./zumbi
-     ```
-
-4. **Divirta-se**:
+3. **Divirta-se**:
      O jogo será iniciado. Aproveite!
 
 Se precisar limpar os arquivos gerados pela compilação, utilize:

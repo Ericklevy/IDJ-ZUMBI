@@ -13,10 +13,12 @@ private:
     int width;
     int height;
     SDL_Rect clipRect;
+    int frameCountW;
+    int frameCountH;
     
 public:
     Sprite();
-    Sprite(std::string file);
+    Sprite(std::string file, int frameCountW = 1, int frameCountH = 1);
     ~Sprite();
     
     void Open(std::string file);
@@ -25,6 +27,10 @@ public:
     int GetWidth();
     int GetHeight();
     bool IsOpen();
+
+    // Novos métodos para animação
+    void SetFrame(int frame);
+    void SetFrameCount(int frameCountW, int frameCountH);
 };
 
 #endif
