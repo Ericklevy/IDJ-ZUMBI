@@ -20,6 +20,8 @@ public:
     void Stop();
     void Open(std::string file);
     bool IsOpen();
+    Mix_Chunk* GetChunk() const { return chunk; }
+
 };
 
 #endif
