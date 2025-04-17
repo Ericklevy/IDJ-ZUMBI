@@ -1,5 +1,6 @@
 #ifndef VEC2_H
 #define VEC2_H
+#include<bits/stdc++.h>
 
 class Vec2 {
 public:

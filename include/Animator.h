@@ -1,5 +1,6 @@
 #ifndef ANIMATOR_H
 #define ANIMATOR_H
+#include<bits/stdc++.h>
 
 #include "Component.h"
 #include "Animation.h"

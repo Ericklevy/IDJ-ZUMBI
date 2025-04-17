@@ -1,5 +1,6 @@
 #include "Music.h"
 #include <iostream>
+#include<bits/stdc++.h>
 
 Music::Music() : music(nullptr) {}
 

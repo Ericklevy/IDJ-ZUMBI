@@ -1,5 +1,6 @@
 #ifndef GAMEOBJECT_H
 #define GAMEOBJECT_H
+#include<bits/stdc++.h>
 
 #include <vector>
 #include <memory>

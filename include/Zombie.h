@@ -2,10 +2,13 @@
 #define ZOMBIE_H
 
 #include "Component.h"
+#include<bits/stdc++.h>
+#include "Sound.h"
 
 class Zombie : public Component {
 private:
     int hitpoints;
+    Sound deathSound;
     
 public:
     Zombie(GameObject& associated);

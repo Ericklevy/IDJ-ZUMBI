@@ -1,5 +1,6 @@
 #ifndef GAME_H
 #define GAME_H
+#include<bits/stdc++.h>
 
 #include <string>
 #include "SDL_include.h"

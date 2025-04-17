@@ -2,6 +2,8 @@
 #define RECT_H
 
 #include "Vec2.h"
+#include<bits/stdc++.h>
+
 
 class Rect {
 public:

@@ -2,6 +2,7 @@
 #define COMPONENT_H
 
 #include "GameObject.h"
+#include<bits/stdc++.h>
 
 class GameObject;
 

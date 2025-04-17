@@ -1,8 +1,10 @@
 #include "Zombie.h"
 #include "SpriteRenderer.h"
 #include "Animator.h"
+#include "Sound.h"
 
-Zombie::Zombie(GameObject& associated) : Component(associated), hitpoints(100) {
+
+Zombie::Zombie(GameObject& associated) : Component(associated), hitpoints(100)  ,deathSound("recursos/audio/Dead.wav"){
     auto sprite = new SpriteRenderer(associated, "recursos/img/Enemy.png", 3, 2);
     associated.AddComponent(sprite);
     
@@ -19,6 +21,7 @@ void Zombie::Damage(int damage) {
         auto animator = (Animator*)associated.GetComponent("Animator");
         if(animator) {
             animator->SetAnimation("dead");
+            deathSound.Play(1);
         }
     }
 }

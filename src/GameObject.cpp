@@ -2,6 +2,8 @@
 #include "Component.h"  // Agora podemos incluir Component.h aqui
 
 #include <algorithm>
+#include<bits/stdc++.h>
+
 
 GameObject::GameObject() : isDead(false) {}
 

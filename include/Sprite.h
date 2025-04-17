@@ -6,6 +6,9 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_mixer.h>
 #include <string>
+#include<bits/stdc++.h>
+#include "Resources.h"
+
 
 class Sprite {
 private:

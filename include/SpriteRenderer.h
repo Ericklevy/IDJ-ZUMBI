@@ -3,6 +3,7 @@
 
 #include "Component.h"
 #include "Sprite.h"
+#include<bits/stdc++.h>
 
 class SpriteRenderer : public Component {
 private:
