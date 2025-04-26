@@ -8,7 +8,7 @@
 class SpriteRenderer : public Component {
 private:
     Sprite sprite;
-    
+    bool cameraFollower; //r; Novo membro
 public:
     SpriteRenderer(GameObject& associated);
     SpriteRenderer(GameObject& associated, std::string file, 
@@ -21,6 +21,7 @@ public:
     void Update(float dt) override;
     void Render() override;
     bool Is(std::string type) override;
+    void SetCameraFollower(bool follow);
 };
 
 #endif

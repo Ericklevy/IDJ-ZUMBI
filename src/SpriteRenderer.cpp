@@ -1,5 +1,8 @@
 #include "SpriteRenderer.h"
 #include "Game.h"
+#include "GameObject.h"
+#include "Camera.h"
+#include "Sprite.h"
 
 SpriteRenderer::SpriteRenderer(GameObject& associated) : Component(associated) {}
 
@@ -33,4 +36,8 @@ void SpriteRenderer::Render() {
 
 bool SpriteRenderer::Is(std::string type) {
     return type == "SpriteRenderer";
+}
+
+void SpriteRenderer::SetCameraFollower(bool follow) {
+    sprite.SetCameraFollower(follow);
 }

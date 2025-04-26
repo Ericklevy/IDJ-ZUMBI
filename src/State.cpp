@@ -6,6 +6,7 @@
 #include "SpriteRenderer.h"
 #include "TileMap.h"
 #include "TileSet.h"
+#include "InputManager.h"
 
 #include <SDL2/SDL_events.h>
 
@@ -20,13 +21,22 @@ State::~State() {
 
 void State::LoadAssets() {
 
+    // Background (cameraFollower = true)
     auto bg = new GameObject();
-    bg->AddComponent(new SpriteRenderer(*bg, "recursos/img/Background.png"));
-    bg->box.x = 0;
-    bg->box.y = 0;
-    bg->box.w = 1200;  // Largura da janela
-    bg->box.h = 900;   // Altura da janela
+    auto bgSprite = new SpriteRenderer(*bg, "recursos/img/Background.png");
+    bgSprite->SetCameraFollower(true);
+    bg->AddComponent(bgSprite);
+    bg->box.w = 1200;
+    bg->box.h = 900;
     AddObject(bg);
+    
+    // TileMap
+    auto mapGO = new GameObject();
+    auto tileSet = new TileSet(64, 64, "recursos/img/Tileset.png");
+    mapGO->AddComponent(new TileMap(*mapGO, "recursos/map/map.txt", tileSet));
+    mapGO->box.x = 0;
+    mapGO->box.y = 0;
+
     
     // Carrega e toca a música
     music.Open("recursos/audio/BGM.wav");
@@ -38,30 +48,34 @@ void State::LoadAssets() {
     Mix_VolumeMusic(MIX_MAX_VOLUME / 4); // Define o volume da música para 25%
     
 
-     // TileMap - ajustado para o mapa 40x40 com tiles 64x64
-    auto mapGO = new GameObject();
-    auto tileSet = new TileSet(64, 64, "recursos/img/Tileset.png");
-    mapGO->AddComponent(new TileMap(*mapGO, "recursos/map/map.txt", tileSet));
-    mapGO->box.x = 0;
-    mapGO->box.y = 0;
-    AddObject(mapGO);
 
-    // Zombies - posicionados dentro dos limites do mapa
-    auto zombie1 = new GameObject();
-    zombie1->box.x = 600;  // Ajuste conforme necessário
-    zombie1->box.y = 450;  // Ajuste conforme necessário
-    zombie1->AddComponent(new Zombie(*zombie1));
-    AddObject(zombie1);
 
-    auto zombie2 = new GameObject();
-    zombie2->box.x = 300;
-    zombie2->box.y = 300;
-    zombie2->AddComponent(new Zombie(*zombie2));
-    AddObject(zombie2);
+    
 }
 
 void State::Update(float dt) {
-    // Verifica se o usuário quer sair
+     // Verifica saída do jogo
+     InputManager& input = InputManager::GetInstance();
+     if(input.QuitRequested() || input.KeyPress(ESCAPE_KEY)) {
+         quitRequested = true;
+     }
+     
+     // Atualiza a câmera
+     Camera::GetInstance().Update(dt);
+     
+     // Cria novos zombies com espaço
+     if(input.KeyPress(SPACE_KEY)) {
+         Vec2 mousePos(input.GetMouseX(), input.GetMouseY());
+         Vec2 cameraPos = Camera::GetInstance().GetPos();
+         
+         auto zombie = new GameObject();
+         zombie->box.x = mousePos.x + cameraPos.x - 32; // Centraliza
+         zombie->box.y = mousePos.y + cameraPos.y - 32; // Centraliza
+         zombie->AddComponent(new Zombie(*zombie));
+         AddObject(zombie);
+     }
+
+
     SDL_Event event;
     while(SDL_PollEvent(&event)) {
         if(event.type == SDL_QUIT) {

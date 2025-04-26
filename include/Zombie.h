@@ -5,13 +5,18 @@
 #include<bits/stdc++.h>
 #include "Sound.h"
 #include <ctime>
+#include "Timer.h"
 
 class Zombie : public Component {
 private:
     int hitpoints;
     Sound deathSound;
-    float deathTimer;  // Tempo de morte
+    Sound hitSound; 
+    float deathTimerr;  // Tempo de morte
     bool isDead;      // Flag para controle
+    bool hit;        // Flag para controle de dano
+    Timer hitTimer; // Timer para controle de dano
+    Timer deathTimer; // Timer para controle de morte
     
 public:
     Zombie(GameObject& associated);

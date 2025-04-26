@@ -1,12 +1,19 @@
 #include "Sprite.h"
 #include "Game.h"
 #include "Resources.h"
+#include "SpriteRenderer.h"
 
 #include <iostream>
 #include <SDL2/SDL_render.h>
 #include <SDL2/SDL_image.h>
 
-Sprite::Sprite() : texture(nullptr), width(0), height(0), frameCountW(1), frameCountH(1) {
+
+Sprite::Sprite() : texture(nullptr), 
+width(0), 
+height(0), 
+frameCountW(1), 
+frameCountH(1),
+cameraFollower(false){
     clipRect = {0, 0, 0, 0};
 }
 
@@ -42,7 +49,15 @@ void Sprite::SetClip(int x, int y, int w, int h) {
 }
 
 void Sprite::Render(int x, int y) {
-    SDL_Rect dstrect = {x, y, clipRect.w, clipRect.h};
+    SDL_Rect dstrect;
+    
+    if(cameraFollower) {
+        dstrect = {x, y, clipRect.w, clipRect.h};
+    } else {
+        Vec2 cameraPos = Camera::GetInstance().GetPos();
+        dstrect = {x - static_cast<int>(cameraPos.x), y - static_cast<int>(cameraPos.y), clipRect.w, clipRect.h};
+    }
+    
     Game& game = Game::GetInstance();
     SDL_RenderCopy(game.GetRenderer(), texture, &clipRect, &dstrect);
 }
@@ -72,4 +87,8 @@ void Sprite::SetFrame(int frame) {
 void Sprite::SetFrameCount(int frameCountW, int frameCountH) {
     this->frameCountW = frameCountW;
     this->frameCountH = frameCountH;
+}
+
+void Sprite::SetCameraFollower(bool follow) {
+    cameraFollower = follow;
 }

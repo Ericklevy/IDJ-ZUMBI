@@ -10,6 +10,7 @@
 #include <iostream>
 #include<bits/stdc++.h>
 #include <Resources.h>
+#include "InputManager.h"
 
 Game* Game::instance = nullptr;
 
@@ -83,10 +84,27 @@ Game& Game::GetInstance() {
     return *instance;
 }
 
+void Game::CalculateDeltaTime() {
+    int currentFrame = SDL_GetTicks();
+    dt = (currentFrame - frameStart) / 1000.0f;
+    frameStart = currentFrame;
+}
+
+float Game::GetDeltaTime() {
+    return dt;
+}
+
+
 void Game::Run() {
+    frameStart = SDL_GetTicks();
+    
     while(!state->QuitRequested()) {
-        state->Update(0);
+        CalculateDeltaTime();
+        InputManager::GetInstance().Update();
+        
+        state->Update(GetDeltaTime());
         state->Render();
+        
         SDL_RenderPresent(renderer);
         SDL_Delay(33);
     }
