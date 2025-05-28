@@ -5,24 +5,42 @@
 #include<bits/stdc++.h>
 
 
-GameObject::GameObject() : isDead(false) {}
+GameObject::GameObject() : isDead(false), started(false), angleDeg(0.0) {}
 
 GameObject::~GameObject() {
-    for(int i = components.size()-1; i >= 0; i--) {
-        delete components[i];
+    for(int i = static_cast<int>(components.size()) - 1; i >= 0; --i) {
+        if (components[i]) {
+            delete components[i];
+        }
     }
     components.clear();
 }
 
+void GameObject::Start() {
+    if (started) return; 
+
+    for(size_t i = 0; i < components.size(); ++i) {
+        if (components[i]) {
+            components[i]->Start(); 
+        }
+    }
+    started = true; 
+}
+
+
 void GameObject::Update(float dt) {
-    for(auto& cpt : components) {
-        cpt->Update(dt);
+    for(size_t i = 0; i < components.size(); ++i) {
+        if (components[i]) {
+            components[i]->Update(dt);
+        }
     }
 }
 
 void GameObject::Render() {
-    for(auto& cpt : components) {
-        cpt->Render();
+    for(size_t i = 0; i < components.size(); ++i) {
+         if (components[i]) {
+            components[i]->Render();
+        }
     }
 }
 
@@ -35,21 +53,26 @@ void GameObject::RequestDelete() {
 }
 
 void GameObject::AddComponent(Component* cpt) {
-    components.push_back(cpt);
+    if (cpt) {
+        components.push_back(cpt);
+        if (started) { 
+            cpt->Start();
+        }
+    }
 }
 
 void GameObject::RemoveComponent(Component* cpt) {
     auto it = std::find(components.begin(), components.end(), cpt);
     if(it != components.end()) {
-        delete *it;
+        // delete *it; // Deletion handled by GameObject destructor or if explicitly needed upon removal
         components.erase(it);
     }
 }
 
 Component* GameObject::GetComponent(std::string type) {
-    for(auto& cpt : components) {
-        if(cpt->Is(type)) {
-            return cpt;
+    for(const auto& comp : components) {
+        if(comp && comp->Is(type)) {
+            return comp;
         }
     }
     return nullptr;

@@ -31,6 +31,8 @@ public:
     SDL_Renderer* GetRenderer();
     State& GetState();
     float GetDeltaTime();
+    int GetWindowWidth() const;
+    int GetWindowHeight() const;
 };
 
 #endif

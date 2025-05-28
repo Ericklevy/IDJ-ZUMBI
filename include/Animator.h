@@ -1,9 +1,9 @@
 #ifndef ANIMATOR_H
 #define ANIMATOR_H
-#include<bits/stdc++.h>
 
 #include "Component.h"
 #include "Animation.h"
+#include "SDL_include.h"
 #include <unordered_map>
 #include <string>
 
@@ -18,6 +18,8 @@ private:
     
 public:
     Animator(GameObject& associated);
+    std::string currentAnimationName; 
+
     
     void Update(float dt) override;
     void Render() override;

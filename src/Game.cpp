@@ -97,18 +97,28 @@ float Game::GetDeltaTime() {
 
 void Game::Run() {
     frameStart = SDL_GetTicks();
-    
-    while(!state->QuitRequested()) {
+
+    if (state) {
+        state->Start();
+    }
+
+    // Game loop
+    while(state && !state->QuitRequested() && !InputManager::GetInstance().QuitRequested()) {
         CalculateDeltaTime();
         InputManager::GetInstance().Update();
-        
-        state->Update(GetDeltaTime());
-        state->Render();
-        
+
+        SDL_SetRenderDrawColor(renderer, 100, 149, 237, 255); // Cornflower Blue
+        SDL_RenderClear(renderer);
+
+        if(state) {
+            state->Update(GetDeltaTime());
+            state->Render(); 
+        }
+
         SDL_RenderPresent(renderer);
         SDL_Delay(33);
     }
-    Resources::ClearImages();
+    // ...
 }
 
 SDL_Renderer* Game::GetRenderer() {
@@ -117,4 +127,20 @@ SDL_Renderer* Game::GetRenderer() {
 
 State& Game::GetState() {
     return *state;
+}
+
+int Game::GetWindowWidth() const {
+    int w = 0;
+    if (window) { 
+        SDL_GetWindowSize(window, &w, nullptr);
+    }
+    return w;
+}
+
+int Game::GetWindowHeight() const {
+    int h = 0;
+    if (window) { 
+        SDL_GetWindowSize(window, nullptr, &h);
+    }
+    return h;
 }

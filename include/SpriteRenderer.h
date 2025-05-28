@@ -16,12 +16,17 @@ public:
     
     void Open(std::string file);
     void SetFrameCount(int frameCountW, int frameCountH);
-    void SetFrame(int frame);
-    
+    void SetFrame(int frame, SDL_RendererFlip flip = SDL_FLIP_NONE);
     void Update(float dt) override;
     void Render() override;
     bool Is(std::string type) override;
     void SetCameraFollower(bool follow);
+    void SetScale(float scaleX, float scaleY); // [cite: 82]
+
+    // Added for Gun reorientation logic
+    void SetSpriteFlip(SDL_RendererFlip flip);
+    Sprite* GetSprite(); // To allow direct manipulation if needed, e.g. for Gun reorientation
+
 };
 
 #endif

@@ -17,6 +17,7 @@ public:
     float Distance(const Vec2& other) const;
     float Inclination() const;
     Vec2 Rotate(float angle) const;
+    static Vec2 Rotate(const Vec2& vec, float angle);
 };
 
 #endif

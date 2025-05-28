@@ -13,17 +13,22 @@ class GameObject {
 private:
     std::vector<Component*> components;
     bool isDead;
+    bool started;
     
 public:
     Rect box;
+    double angleDeg;
     
     GameObject();
     ~GameObject();
-    
+
+
+    void Start();
     void Update(float dt);
     void Render();
     bool IsDead();
     void RequestDelete();
+
     void AddComponent(Component* cpt);
     void RemoveComponent(Component* cpt);
     Component* GetComponent(std::string type);

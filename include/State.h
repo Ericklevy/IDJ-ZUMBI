@@ -13,20 +13,28 @@
 
 class State {
 private:
-    std::vector<std::unique_ptr<GameObject>> objectArray;
+    std::vector<std::shared_ptr<GameObject>> objectArray;
     Sprite bg;
     Music music;
     bool quitRequested;
     float dt;
+    bool started;
     
 public:
     State();
     ~State();
+
+    
     bool QuitRequested();
     void LoadAssets();
     void Update(float dt);
     void Render();
-    void AddObject(GameObject* go);
+
+    //entrega 5
+    void Start();
+    std::weak_ptr<GameObject> AddObject(GameObject* go); 
+    std::weak_ptr<GameObject> GetObjectPtr(GameObject* go); 
+
 
 };
 
