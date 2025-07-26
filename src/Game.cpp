@@ -103,21 +103,14 @@ void Game::Run() {
     }
 
     // Game loop
-    while(state && !state->QuitRequested() && !InputManager::GetInstance().QuitRequested()) {
-        CalculateDeltaTime();
-        InputManager::GetInstance().Update();
-
-        SDL_SetRenderDrawColor(renderer, 100, 149, 237, 255); // Cornflower Blue
-        SDL_RenderClear(renderer);
-
-        if(state) {
-            state->Update(GetDeltaTime());
-            state->Render(); 
+    while(!state->QuitRequested()) {
+            CalculateDeltaTime();
+            InputManager::GetInstance().Update();
+            state->Update(GetDeltaTime());  // ← Atualiza primeiro
+            state->Render();                // ← Renderiza depois
+            SDL_RenderPresent(renderer);
+            SDL_Delay(33);
         }
-
-        SDL_RenderPresent(renderer);
-        SDL_Delay(33);
-    }
     // ...
 }
 

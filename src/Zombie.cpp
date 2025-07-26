@@ -5,15 +5,19 @@
 #include "InputManager.h"
 #include "Camera.h"
 
+int Zombie::zombieCount = 0;
 
 Zombie::Zombie(GameObject& associated) : 
     Component(associated), 
-    hitpoints(100)  ,
-    deathSound("recursos/audio/Dead.wav") ,
+    hitpoints(100),
+    deathSound("recursos/audio/Dead.wav"),
     hitSound("recursos/audio/Hit0.wav"),
     deathTimerr(0),
-    hit(false), isDead(false) {
-
+    hit(false),
+    isDead(false) {
+    
+    zombieCount++;  // Incrementa o contador ao criar
+    
     Mix_VolumeChunk(deathSound.GetChunk(), MIX_MAX_VOLUME / 4);
     auto sprite = new SpriteRenderer(associated, "recursos/img/Enemy.png", 3, 2);
     associated.AddComponent(sprite);
@@ -67,17 +71,24 @@ void Zombie::Update(float dt) {
                 animator->SetAnimation("walking");
             }
         }
+        return;  // Não processar cliques durante animação de hit
     }
-    
-    // Verifica clique do mouse
+
+    // Verificação segura de clique
     InputManager& input = InputManager::GetInstance();
     if(input.MousePress(LEFT_MOUSE_BUTTON)) {
+        // Verifica se o GameObject ainda é válido
+        if(associated.IsDead() || associated.box.w <= 0 || associated.box.h <= 0) {
+            return;
+        }
+
         Vec2 mousePos(input.GetMouseX(), input.GetMouseY());
         Vec2 cameraPos = Camera::GetInstance().GetPos();
         
         // Ajusta posição do mouse para coordenadas do mundo
         Vec2 worldPos = mousePos + cameraPos;
         
+        // Verificação de colisão segura
         if(worldPos.x >= associated.box.x && 
            worldPos.x <= associated.box.x + associated.box.w &&
            worldPos.y >= associated.box.y && 
@@ -91,4 +102,8 @@ void Zombie::Render() {}
 
 bool Zombie::Is(std::string type) {
     return type == "Zombie";
+}
+
+Zombie::~Zombie() {
+    zombieCount--;  // Decrementa quando um zumbi é destruído
 }

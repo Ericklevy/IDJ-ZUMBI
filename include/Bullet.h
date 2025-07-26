@@ -4,21 +4,21 @@
 #include "Component.h"
 #include "Vec2.h"
 
-class Bullet : public Component { // [cite: 64]
+class Bullet : public Component {
 public:
-    Bullet(GameObject& associated, float angleDeg, float speedScalar, int damage, float maxDistance); // [cite: 67]
+    Bullet(GameObject& associated, float angleDeg, float speedScalar, int damage, float maxDistance);
     ~Bullet() override = default;
 
-    void Update(float dt) override; // [cite: 70]
-    void Render() override; // [cite: 71] (PDF says doesn't do anything)
-    bool Is(std::string type) override; // [cite: 72]
+    void Update(float dt) override;
+    void Render() override;
+    bool Is(std::string type) override;
 
-    int GetDamage() const; // [cite: 73]
+    int GetDamage() const;
 
 private:
-    Vec2 speed; // Velocity vector [cite: 64, 68]
-    float distanceLeft; // [cite: 64, 69]
-    int damage; // [cite: 64]
+    float distanceLeft;  // Reordenado para ficar primeiro
+    Vec2 speed;
+    int damage;
 };
 
 #endif

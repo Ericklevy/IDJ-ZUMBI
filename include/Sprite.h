@@ -1,10 +1,13 @@
 #ifndef SPRITE_H
 #define SPRITE_H
 
+#define INCLUDE_SDL 
+#define INCLUDE_SDL_IMAGE
+#define INCLUDE_SDL_MIXER
+#define INCLUDE_SDL_TTF
+
 #include "SDL_include.h"
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_mixer.h>
+
 #include <string>
 #include "Rect.h"
 

@@ -5,8 +5,12 @@
 #include "Camera.h"
 
 #include <iostream>
-#include <SDL2/SDL_render.h>
-#include <SDL2/SDL_image.h>
+
+#include "SDL_include.h"
+#define INCLUDE_SDL 
+#define INCLUDE_SDL_IMAGE
+#define INCLUDE_SDL_MIXER
+#define INCLUDE_SDL_TTF
 
 
 Sprite::Sprite() : texture(nullptr), 

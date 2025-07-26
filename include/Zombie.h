@@ -2,29 +2,32 @@
 #define ZOMBIE_H
 
 #include "Component.h"
-#include<bits/stdc++.h>
 #include "Sound.h"
-#include <ctime>
 #include "Timer.h"
 
 class Zombie : public Component {
 private:
+    static int zombieCount;  // Contador estático de zumbis
     int hitpoints;
     Sound deathSound;
-    Sound hitSound; 
-    float deathTimerr;  // Tempo de morte
-    bool isDead;      // Flag para controle
-    bool hit;        // Flag para controle de dano
-    Timer hitTimer; // Timer para controle de dano
-    Timer deathTimer; // Timer para controle de morte
+    Sound hitSound;
+    float deathTimerr;
+    bool isDead;
+    bool hit;
+    Timer hitTimer;
+    Timer deathTimer;
     
 public:
     Zombie(GameObject& associated);
+    ~Zombie();
     
     void Damage(int damage);
     void Update(float dt) override;
     void Render() override;
     bool Is(std::string type) override;
+    
+    // Método estático para acessar o contador
+    static int GetZombieCount() { return zombieCount; }
 };
 
 #endif

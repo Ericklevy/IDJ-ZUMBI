@@ -1,12 +1,16 @@
 #ifndef RESOURCES_H
 #define RESOURCES_H
 
+
+#define INCLUDE_SDL 
+#define INCLUDE_SDL_IMAGE
+#define INCLUDE_SDL_MIXER
+#define INCLUDE_SDL_TTF
+
+
 #include "SDL_include.h"
 #include <unordered_map>
 #include <string>
-#include <SDL2/SDL_mixer.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_ttf.h>
 #include <iostream>
 #include<bits/stdc++.h>
 

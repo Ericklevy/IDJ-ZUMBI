@@ -15,7 +15,10 @@
 #include <iostream>
 #include <algorithm> 
 
-#include <SDL2/SDL_events.h>
+#define INCLUDE_SDL 
+#define INCLUDE_SDL_IMAGE
+#define INCLUDE_SDL_MIXER
+#define INCLUDE_SDL_TTF
 
 State::State() : quitRequested(false), started(false) {
 }

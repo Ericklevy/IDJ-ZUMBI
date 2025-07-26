@@ -39,15 +39,23 @@ void SpriteRenderer::SetFrame(int frame, SDL_RendererFlip flip) { // [cite: 89]
 
 void SpriteRenderer::Update(float dt) {}
 
+
 void SpriteRenderer::Render() {
-    sprite.Render(static_cast<int>(associated.box.x ),
-                  static_cast<int>(associated.box.y),
-                  associated.angleDeg);
+    
+    if (!sprite.IsOpen()) {
+        std::cerr << "ERRO: Sprite nao carregado!" << std::endl;
+        return;
+    }
+    sprite.Render(static_cast<int>(associated.box.x), 
+                 static_cast<int>(associated.box.y), 
+                 associated.angleDeg);
 }
+
 
 bool SpriteRenderer::Is(std::string type) {
     return type == "SpriteRenderer";
 }
+
 
 void SpriteRenderer::SetCameraFollower(bool follow) {
     sprite.SetCameraFollower(follow);
